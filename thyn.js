@@ -2,7 +2,6 @@ function __rest(m, u) {
     const regx = /^(https?):\/\/([a-zA-Z0-9.-]*)(:+[0-9]+)(\/?.+)$/;
     let parts = u.match(regx);
 
-    console.info(u, parts);
     let http = require(parts[1]);
     let headers = {};
     let query = {};
@@ -19,16 +18,16 @@ function __rest(m, u) {
         return str;
     }
 
-    return {
-
-
+    const api = {
         query: (obj) => {
             query = obj;
+            return api;
         },
         headers: (obj) => {
             headers = obj;
+            return api;
         },
-        end: (cb) => {
+        request: (cb) => {
             let out = { text: ""}
             let options = {
                 "method": m.toUpperCase(),
@@ -40,10 +39,10 @@ function __rest(m, u) {
 
             const req = http.request(options, res => {
                 res.on("data", d => out.text += d);
-                res.on("end", ()=>{ cb(out) });
+                res.on("end", ()=>{ cb(null, out.text) });
             })
 
-            req.on("error", e => { out.error = e; cb(out)});
+            req.on("error", e => { cb(e) });
             req.end();
         }
     }
