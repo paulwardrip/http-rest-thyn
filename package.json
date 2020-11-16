@@ -1,0 +1,8 @@
+{
+  "name": "http-rest-thyn",
+  "version": "0.0.1",
+  "description": "a tiny rest client built from core http/s",
+  "main": "thyn.js",
+  "author": "Paul Wardrip <pwardrip@gmail.com>",
+  "license": "ISC"
+}
